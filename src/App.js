@@ -6,7 +6,7 @@ import scalerParams from './scaler_params.json';
 export default function DiabetesRiskApp() {
   // 1. STATE MANAGEMENT
   const [formData, setFormData] = useState({
-    Age: 40, Gender: 1, HeightCM: 175, WeightKG: 85,
+    Age: 45, Gender: 1, HeightCM: 175, WeightKG: 85,
     Polyuria: 0, Polydipsia: 0, 'sudden weight loss': 0,
     weakness: 0, Polyphagia: 0, 'Genital thrush': 0, 'visual blurring': 0,
     Itching: 0, Irritability: 0, 'delayed healing': 0, 'partial paresis': 0,
@@ -44,6 +44,7 @@ export default function DiabetesRiskApp() {
 
   // 3. REAL-TIME CALCULATION
   // Use useEffect to calculate risk instantly when inputs change (better UX than a submit button)
+
   useEffect(() => {
     const heightM = formData.HeightCM / 100;
     const currentBmi = (formData.WeightKG / (heightM * heightM)).toFixed(1);
