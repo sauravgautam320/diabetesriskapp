@@ -59,7 +59,10 @@ export default function RemissionPanel({ riskScore, bmi }) {
           </p>
 
           <div className="range-row">
-            <label>Target Loss</label>
+            <div className="range-label-col">
+              <label>Target Loss (kg)</label>
+              <div className="drag-hint">← Drag to simulate →</div>
+            </div>
             <input
               type="range"
               min="0"
@@ -73,7 +76,9 @@ export default function RemissionPanel({ riskScore, bmi }) {
 
           <div className="projected-row">
             <span className="proj-label">Projected Risk</span>
-            <span className="proj-value">{projected}%</span>
+            <span className="proj-value" style={{ color: projected > 50 ? 'var(--red)' : 'var(--green)' }}>
+              {projected}%
+            </span>
           </div>
         </div>
       </div>

@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 // ── Components ────────────────────────────────────────────────────────────────
-import SymptomToggle  from './SymptomToggle';
-import BmiBar         from './BmiBar';
-import InferenceCard  from './InferenceCard';
+import SymptomToggle from './SymptomToggle';
+import BmiBar from './BmiBar';
+import InferenceCard from './InferenceCard';
 import RemissionPanel from './RemissionPanel';
+import AboutModal from './AboutModal';
 
 // ── Model assets ──────────────────────────────────────────────────────────────
 // Ensure these JSON files exist in your src/ folder.
-import xgbModel     from './diabetes_xgboost_model.json';
+import xgbModel from './diabetes_xgboost_model.json';
 import scalerParams from './scaler_params.json';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -23,7 +24,7 @@ function predictXGBoost(features) {
     trees.forEach(tree => {
       let node = 0;
       while (tree.left_children[node] !== -1) {
-        const featureIdx     = tree.split_indices[node];
+        const featureIdx = tree.split_indices[node];
         const splitCondition = tree.split_conditions[node];
         node = features[featureIdx] < splitCondition
           ? tree.left_children[node]
@@ -69,18 +70,18 @@ function buildFeatureVector(formData, scaledAge) {
 const PRIMARY_SYMPTOMS = [
   { label: 'Frequent Urination (Polyuria)', field: 'Polyuria', fullWidth: false },
   { label: 'Excessive Thirst (Polydipsia)', field: 'Polydipsia', fullWidth: false },
-  { label: 'Sudden Weight Loss',            field: 'sudden weight loss', fullWidth: true },
+  { label: 'Sudden Weight Loss', field: 'sudden weight loss', fullWidth: true },
 ];
 
 const SECONDARY_SYMPTOMS = [
-  { label: 'General Weakness',      field: 'weakness' },
-  { label: 'Excessive Hunger',      field: 'Polyphagia' },
-  { label: 'Visual Blurring',       field: 'visual blurring' },
-  { label: 'Itching',               field: 'Itching' },
-  { label: 'Delayed Healing',       field: 'delayed healing' },
-  { label: 'Muscle Stiffness',      field: 'muscle stiffness' },
-  { label: 'Irritability',          field: 'Irritability' },
-  { label: 'Partial Paresis',       field: 'partial paresis' },
+  { label: 'General Weakness', field: 'weakness' },
+  { label: 'Excessive Hunger', field: 'Polyphagia' },
+  { label: 'Visual Blurring', field: 'visual blurring' },
+  { label: 'Itching', field: 'Itching' },
+  { label: 'Delayed Healing', field: 'delayed healing' },
+  { label: 'Muscle Stiffness', field: 'muscle stiffness' },
+  { label: 'Irritability', field: 'Irritability' },
+  { label: 'Partial Paresis', field: 'partial paresis' },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -112,8 +113,8 @@ const INITIAL_FORM = {
 
 export default function App() {
   const [formData, setFormData] = useState(INITIAL_FORM);
-  const [riskScore, setRiskScore]   = useState(null);
-  const [bmi, setBmi]               = useState(null);
+  const [riskScore, setRiskScore] = useState(null);
+  const [bmi, setBmi] = useState(null);
 
   // ── Derived values ─────────────────────────────────────────────────────────
   const symptomCount = countActiveSymptoms(formData);
@@ -124,8 +125,8 @@ export default function App() {
     setBmi(currentBmi);
 
     const scaledAge = (formData.Age - scalerParams.age_min) * scalerParams.age_scale;
-    const features  = buildFeatureVector(formData, scaledAge);
-    const prob      = predictXGBoost(features);
+    const features = buildFeatureVector(formData, scaledAge);
+    const prob = predictXGBoost(features);
 
     setRiskScore(parseFloat((prob * 100).toFixed(1)));
   }, [formData]);
@@ -137,40 +138,81 @@ export default function App() {
   const onNumberInput = field => e =>
     setField(field, parseFloat(e.target.value) || 0);
 
+  // ── Mobile Tabs State & Modal State ──────────────────────────────────────
+  const [mobileTab, setMobileTab] = useState('bio'); // 'bio' | 'symptoms'
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <>
-      {/* ── Header ─────────────────────────────────────────────────────────── */}
+    <div className="app-wrapper">
+      <AboutModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
       <header className="app-header">
-        <div className="logo-mark">
-          <svg viewBox="0 0 24 24">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-          </svg>
-        </div>
-        <div className="header-text">
-          <span className="header-title">Diabetes Risk Predictor</span>
-          <span className="header-sub">
-            Client-Side XAI Diagnostic · Zero Data Egress
-          </span>
-        </div>
-        <div className="badge-live">
-          <span className="badge-live-dot" />
-          LIVE INFERENCE
+        <div className="header-inner">
+          <div className="logo-mark">
+            <svg viewBox="0 0 24 24">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+          </div>
+          <div className="header-text">
+            <span className="header-title">Diabetes Risk Predictor</span>
+            <span className="header-sub">
+              Client-Side XAI Diagnostic · Zero Data Egress
+            </span>
+          </div>
+          <div className="badge-live">
+            <span className="badge-live-dot" />
+            LIVE INFERENCE
+          </div>
+          <button className="about-toggle-btn" onClick={() => setIsModalOpen(true)} title="About & Privacy">
+            <svg viewBox="0 0 24 24" className="about-icon" stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+            <span className="about-text">About &amp; Privacy</span>
+          </button>
         </div>
       </header>
 
-      {/* ── Main grid ──────────────────────────────────────────────────────── */}
+      {/* ── Mobile Slim Pinned Header (Anti-Bloat) ───────────────────────── */}
+      <div className="mini-sticky-score">
+        <span className="mini-score-label">Live Risk Score:</span>
+        <span className="mini-score-raw" style={{ color: riskScore > 50 ? 'var(--red)' : 'var(--green)' }}>
+          {riskScore != null ? `${riskScore}%` : '—'}
+        </span>
+      </div>
+
       <main className="app-main">
 
-        {/* LEFT — Intake form */}
-        <div className="left-column">
+        {/* MOBILE TABS NAVIGATION */}
+        <div className="mobile-tabs-nav">
+          <button 
+            className={`tab-btn ${mobileTab === 'bio' ? 'active' : ''}`}
+            onClick={() => setMobileTab('bio')}
+          >
+            1. Bio
+          </button>
+          <button 
+            className={`tab-btn ${mobileTab === 'symptoms' ? 'active' : ''}`}
+            onClick={() => setMobileTab('symptoms')}
+          >
+            2. Symptoms
+          </button>
+          <button 
+            className={`tab-btn ${mobileTab === 'results' ? 'active' : ''}`}
+            onClick={() => setMobileTab('results')}
+          >
+            3. Results
+          </button>
+        </div>
 
-          {/* Section 1 — Demographics & Biometrics */}
+        {/* COLUMN 1: Biometrics */}
+        <div className={`column input-col bio-col ${mobileTab === 'bio' ? 'm-active' : ''}`}>
           <section className="card">
             <div className="section-label">
               <span className="dot" style={{ background: '#3b9eed' }} />
               Demographics &amp; Biometrics
             </div>
-
             <div className="field-grid">
               <div className="field-group">
                 <label>Age</label>
@@ -213,19 +255,25 @@ export default function App() {
                 />
               </div>
             </div>
-
-            {/* BMI track — renders once bmi is calculated */}
             {bmi && <BmiBar bmi={bmi} />}
-          </section>
 
-          {/* Section 2 — Primary Clinical Indicators */}
-          <section className="card">
+            {/* Mobile UX CTA */}
+            <div className="mobile-cta-row">
+              <button className="cta-next" onClick={() => setMobileTab('symptoms')}>
+                Next: Clinical Symptoms &rarr;
+              </button>
+            </div>
+          </section>
+        </div>
+
+        {/* COLUMN 2: Symptoms */}
+        <div className={`column input-col symp-col ${mobileTab === 'symptoms' ? 'm-active' : ''}`}>
+          <section className="card mb-card">
             <div className="section-label">
               <span className="dot" style={{ background: 'var(--red)' }} />
               Primary Clinical Indicators
               <span className="label-aside">Highest SHAP weight</span>
             </div>
-
             <div className="symptoms-grid">
               {PRIMARY_SYMPTOMS.map(({ label, field, fullWidth }) => (
                 <SymptomToggle
@@ -241,13 +289,11 @@ export default function App() {
             </div>
           </section>
 
-          {/* Section 3 — Secondary Symptoms */}
           <section className="card">
             <div className="section-label">
               <span className="dot" style={{ background: 'var(--teal)' }} />
               Secondary Symptoms
             </div>
-
             <div className="symptoms-grid">
               {SECONDARY_SYMPTOMS.map(({ label, field }) => (
                 <SymptomToggle
@@ -260,12 +306,18 @@ export default function App() {
                 />
               ))}
             </div>
-          </section>
 
+            {/* Mobile UX CTA */}
+            <div className="mobile-cta-row">
+              <button className="cta-next" onClick={() => setMobileTab('results')}>
+                View Detailed Analysis &rarr;
+              </button>
+            </div>
+          </section>
         </div>
 
-        {/* RIGHT — Results dashboard */}
-        <div className="right-column">
+        {/* COLUMN 3: Results (Desktop Right / Mobile 3rd Tab) */}
+        <div className={`column results-col ${mobileTab === 'results' ? 'm-active' : ''}`}>
           <InferenceCard
             riskScore={riskScore}
             bmi={bmi}
@@ -276,6 +328,16 @@ export default function App() {
         </div>
 
       </main>
-    </>
+
+      {/* ── Clinical Disclaimer ─────────────────────────────────────────── */}
+      <footer className="app-disclaimer">
+        <div className="disclaimer-inner">
+          <strong>Clinical Disclaimer:</strong> This system utilizes probabilistic machine learning for early-stage screening. 
+          It does <strong>not</strong> constitute medical advice or a definitive diagnosis. 
+          A conclusive diagnosis requires Hemoglobin A1c (HbA1c) or fasting plasma glucose tests 
+          administered by a licensed healthcare professional.
+        </div>
+      </footer>
+    </div>
   );
 }
