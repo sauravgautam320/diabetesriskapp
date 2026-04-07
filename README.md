@@ -1,71 +1,90 @@
-### DIabetes Risk Predictor App
-# Getting Started with Create React App
+# 🩸 Diabetes Risk Predictor
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### **Real-Time, Client-Side XAI Diagnostic Tool**
 
-## Available Scripts
+A modern, privacy-preserving React application that leverages machine learning to predict diabetes risk. Built with a "Zero Data Egress" philosophy, the entire inference process occurs locally on the user's device.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🚀 Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The **Diabetes Risk Predictor** is designed to provide instant, explainable metabolic risk assessments. By combining a high-performance XGBoost model with a streamlined React interface, the app allows users to input biometric data and clinical symptoms to receive a real-time risk score—without ever sending sensitive health data to a server.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🛡️ Privacy & Security: "Zero Data Egress"
+Unlike traditional ML applications that require back-end processing, this tool implements the **XGBoost Inference Engine** directly in JavaScript.
+- **Local Compute**: All calculations are performed in your browser's V8 engine.
+- **Data Sovereignty**: Your age, weight, and clinical symptoms never leave your local machine.
+- **Offline Capable**: Once loaded, the engine requires no internet connection to function.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## ✨ Key Features
 
-### `npm run build`
+- **⚡ Live Inference**: Risk scores update instantly as you adjust input values.
+- **🧠 Explainable AI (XAI)**: Integrated SHAP-weighted insights highlight which clinical indicators (e.g., Polyuria, Polydipsia) are driving the risk score.
+- **📊 Interactive Biometrics**: Visual BMI tracking and responsive risk gauges provide immediate feedback.
+- **📱 Modern UX**: A high-density dashboard built with React 19 and Tailwind CSS, featuring Lucide icons and metabolic status panels.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🛠️ Technical Architecture
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Tech Stack
+- **Frontend**: [React 19](https://reactjs.org/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Inference engine**: Custom Client-Side XGBoost implementation
+- **Model Format**: JSON-based gradient booster model
 
-### `npm run eject`
+### Inference Engine Detail
+The app utilizes a pre-trained XGBoost model (`diabetes_xgboost_model.json`). The inference algorithm reconstructs the decision trees in memory and traverses them based on the user's feature vector (scaled using `scaler_params.json`).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🚦 Getting Started
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Prerequisites
+- Node.js (Latest LTS recommended)
+- npm or yarn
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/diabetesriskapp.git
+   cd diabetesriskapp
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm start
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📁 Project Structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```text
+src/
+├── components/          # Modular UI elements (Gauge, Bars, Toggles)
+├── diabetes_xgboost_model.json # Pre-trained model weights
+├── scaler_params.json   # Feature scaling parameters
+├── App.js               # Main application logic & inference engine
+└── index.css            # Global styles and Tailwind imports
+```
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## ⚠️ Disclaimer
 
-### Analyzing the Bundle Size
+> [!WARNING]
+> **Not for Medical Use**: This application is a technical demonstration of client-side machine learning and is **not** a licensed medical diagnostic tool. Always consult with a healthcare professional for medical advice and diagnosis.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 📄 License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the MIT License - see the LICENSE file for details.
