@@ -7,6 +7,7 @@ import BmiBar from './BmiBar';
 import InferenceCard from './InferenceCard';
 import RemissionPanel from './RemissionPanel';
 import AboutModal from './AboutModal';
+import SymptomInfoModal from './SymptomInfoModal';
 
 // ── Model assets ──────────────────────────────────────────────────────────────
 // Ensure these JSON files exist in your src/ folder.
@@ -141,10 +142,12 @@ export default function App() {
   // ── Mobile Tabs State & Modal State ──────────────────────────────────────
   const [mobileTab, setMobileTab] = useState('bio'); // 'bio' | 'symptoms'
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [infoSymptom, setInfoSymptom] = useState(null);
 
   return (
     <div className="app-wrapper">
       <AboutModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <SymptomInfoModal isOpen={!!infoSymptom} onClose={() => setInfoSymptom(null)} symptomField={infoSymptom} />
 
       <header className="app-header">
         <div className="header-inner">
@@ -284,6 +287,7 @@ export default function App() {
                   fullWidth={fullWidth}
                   formData={formData}
                   onChange={setField}
+                  onInfoClick={setInfoSymptom}
                 />
               ))}
             </div>
@@ -303,6 +307,7 @@ export default function App() {
                   isPrimary={false}
                   formData={formData}
                   onChange={setField}
+                  onInfoClick={setInfoSymptom}
                 />
               ))}
             </div>
