@@ -27,8 +27,24 @@ export default function SymptomToggle({
   const active = formData[field] === 1;
   const activeClass = active ? (isPrimary ? 'active-primary' : 'active-secondary') : '';
 
+  const handlePillClick = () => {
+    onChange(field, active ? 0 : 1);
+  };
+
   return (
-    <label className={`toggle-pill ${activeClass} ${fullWidth ? 'full-width' : ''}`}>
+    <div
+      className={`toggle-pill ${activeClass} ${fullWidth ? 'full-width' : ''}`}
+      onClick={handlePillClick}
+      role="checkbox"
+      aria-checked={active}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          handlePillClick();
+        }
+      }}
+    >
       <span className="pill-check">
         <CheckIcon />
       </span>
@@ -39,7 +55,6 @@ export default function SymptomToggle({
           type="button" 
           className="symptom-info-btn"
           onClick={(e) => {
-            e.preventDefault();
             e.stopPropagation();
             onInfoClick(field);
           }}
@@ -52,13 +67,6 @@ export default function SymptomToggle({
           </svg>
         </button>
       )}
-
-      <input
-        type="checkbox"
-        style={{ display: 'none' }}
-        checked={active}
-        onChange={e => onChange(field, e.target.checked ? 1 : 0)}
-      />
-    </label>
+    </div>
   );
 }
