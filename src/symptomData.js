@@ -75,5 +75,19 @@ export const SYMPTOM_DATA = {
     howItMeasuresRisk: 'Chronically high levels of glucose in the blood damage the walls of the tiny blood vessels (capillaries) that nourish your nerves, especially in the legs. This directly leads to nerve damage (neuropathy) which impairs motor control.',
     criticality: 'This is a serious secondary symptom indicating that sustained hyperglycemia has likely already caused functional nerve damage (diabetic neuropathy). It sharply increases absolute patient risk.',
     baseline: 'Experiencing a limb "falling asleep" due to pressure on a nerve is perfectly normal. Partial paresis features distinct, persistent weakness, dropping items frequently, or a "pins and needles" sensation without a physical cause.'
+  },
+  'Genital thrush': {
+    title: 'Genital Thrush',
+    definition: 'A yeast infection (candidiasis) around the genital area, leading to itching, irritation, and sometimes a white discharge.',
+    howItMeasuresRisk: 'High blood sugar creates an ideal breeding ground for yeast (Candida) to thrive, particularly in warm, moist areas like the genitals. Excess glucose is also secreted in urine, fueling the infection.',
+    criticality: 'Frequent or difficult-to-treat yeast infections can be an early indicator of chronically high blood glucose levels and weakened immune response.',
+    baseline: 'Occasional yeast infections can occur due to antibiotics or other factors. However, recurrent, unprovoked thrush that does not respond well to standard treatments is highly clinically significant for reviewing blood sugar levels.'
+  },
+  'Alopecia': {
+    title: 'Alopecia (Hair Loss)',
+    definition: 'Unexpected thinning of the hair, hair loss in patches, or general reduction in hair volume.',
+    howItMeasuresRisk: 'Poor blood circulation caused by high blood sugar can damage the hair follicles, preventing them from receiving the necessary nutrients and oxygen to grow. Hormonal imbalances associated with metabolic issues can also accelerate hair loss.',
+    criticality: 'While a secondary and often overlooked symptom, alopecia combined with other metabolic indicators can highlight systemic microvascular and endocrine disruption in the body.',
+    baseline: 'Gradual hair thinning due to aging or genetics is expected. Sudden, widespread hair loss or patchy baldness without an obvious cause, concurrent with lethargy or weight changes, deviates from the norm.'
   }
 };

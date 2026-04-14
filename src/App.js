@@ -83,6 +83,8 @@ const SECONDARY_SYMPTOMS = [
   { label: 'Muscle Stiffness', field: 'muscle stiffness' },
   { label: 'Irritability', field: 'Irritability' },
   { label: 'Partial Paresis', field: 'partial paresis' },
+  { label: 'Genital Thrush', field: 'Genital thrush' },
+  { label: 'Alopecia', field: 'Alopecia' },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -125,8 +127,11 @@ export default function App() {
     const currentBmi = calcBmi(formData.WeightKG, formData.HeightCM);
     setBmi(currentBmi);
 
+    const isObese = currentBmi >= 30 ? 1 : 0;
+    const inferenceData = { ...formData, Obesity: isObese };
+
     const scaledAge = (formData.Age - scalerParams.age_min) * scalerParams.age_scale;
-    const features = buildFeatureVector(formData, scaledAge);
+    const features = buildFeatureVector(inferenceData, scaledAge);
     const prob = predictXGBoost(features);
 
     setRiskScore(parseFloat((prob * 100).toFixed(1)));
