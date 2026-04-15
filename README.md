@@ -21,7 +21,7 @@ Unlike traditional ML applications that rely on server-side APIs, this tool impl
 ## ✨ Key Features
 
 ### 🧠 Explainable AI (XAI)
-Integrated **SHAP-weighted insights** highlight which clinical indicators (e.g., Polyuria, Polydipsia) are driving the specific risk score. Users don't just see a number; they see the *why*.
+Integrated **SHAP-weighted insights** highlight which clinical indicators (e.g., Polyuria, Polydipsia etc as primary indicators and Alopecia, Partial Paresis etc as secondary) are driving the specific risk score. Users don't just see a number; they see the *why*.
 
 ### ⚖️ DiRECT Remission Simulator
 A dynamic simulation tool based on the **DiRECT trial** data. It allows users in high-risk categories to visualize how targeted weight loss could potentially reduce their metabolic risk profile.
