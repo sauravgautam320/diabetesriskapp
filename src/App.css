@@ -133,6 +133,32 @@ body {
   flex-shrink: 0;
 }
 
+.view-toggle {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-left: 10px;
+}
+
+.view-toggle-btn {
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  padding: 6px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.view-toggle-btn.active {
+  background: rgba(13, 158, 138, 0.22);
+  color: #9ff3e7;
+}
+
 .about-toggle-btn {
   display: flex;
   align-items: center;
@@ -856,6 +882,16 @@ body {
   .app-header { height: 52px; }
   .header-inner { padding: 0 1rem; justify-content: center; } /* explicitly center logo/text on mobile */
   .header-sub, .badge-live { display: none; }
+  .view-toggle {
+    position: absolute;
+    left: 12px;
+    margin-left: 0;
+    border-color: rgba(255, 255, 255, 0.16);
+  }
+  .view-toggle-btn {
+    font-size: 9px;
+    padding: 6px 8px;
+  }
   
   .about-toggle-btn {
     position: absolute;

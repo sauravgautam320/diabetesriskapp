@@ -8,6 +8,7 @@ import InferenceCard from './InferenceCard';
 import RemissionPanel from './RemissionPanel';
 import AboutModal from './AboutModal';
 import SymptomInfoModal from './SymptomInfoModal';
+import PitchDeck from './PitchDeck';
 
 // ── Model assets ──────────────────────────────────────────────────────────────
 // Ensure these JSON files exist in your src/ folder.
@@ -118,6 +119,7 @@ export default function App() {
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [riskScore, setRiskScore] = useState(null);
   const [bmi, setBmi] = useState(null);
+  const [viewMode, setViewMode] = useState('predictor');
 
   // ── Derived values ─────────────────────────────────────────────────────────
   const symptomCount = countActiveSymptoms(formData);
@@ -171,6 +173,24 @@ export default function App() {
             <span className="badge-live-dot" />
             LIVE INFERENCE
           </div>
+          <div className="view-toggle" role="tablist" aria-label="App mode switch">
+            <button
+              className={`view-toggle-btn ${viewMode === 'predictor' ? 'active' : ''}`}
+              onClick={() => setViewMode('predictor')}
+              role="tab"
+              aria-selected={viewMode === 'predictor'}
+            >
+              Predictor
+            </button>
+            <button
+              className={`view-toggle-btn ${viewMode === 'deck' ? 'active' : ''}`}
+              onClick={() => setViewMode('deck')}
+              role="tab"
+              aria-selected={viewMode === 'deck'}
+            >
+              Defence Deck
+            </button>
+          </div>
           <button className="about-toggle-btn" onClick={() => setIsModalOpen(true)} title="About & Privacy">
             <svg viewBox="0 0 24 24" className="about-icon" stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10" />
@@ -183,13 +203,16 @@ export default function App() {
       </header>
 
       {/* ── Mobile Slim Pinned Header (Anti-Bloat) ───────────────────────── */}
-      <div className="mini-sticky-score">
+      <div className="mini-sticky-score" style={{ display: viewMode === 'predictor' ? undefined : 'none' }}>
         <span className="mini-score-label">Live Risk Score:</span>
         <span className="mini-score-raw" style={{ color: riskScore > 50 ? 'var(--red)' : 'var(--green)' }}>
           {riskScore != null ? `${riskScore}%` : '—'}
         </span>
       </div>
 
+      {viewMode === 'deck' ? (
+        <PitchDeck onExit={() => setViewMode('predictor')} />
+      ) : (
       <main className="app-main">
 
         {/* MOBILE TABS NAVIGATION */}
@@ -338,9 +361,10 @@ export default function App() {
         </div>
 
       </main>
+      )}
 
       {/* ── Clinical Disclaimer ─────────────────────────────────────────── */}
-      <footer className="app-disclaimer">
+      <footer className="app-disclaimer" style={{ display: viewMode === 'predictor' ? undefined : 'none' }}>
         <div className="disclaimer-inner">
           <strong>Clinical Disclaimer:</strong> This system utilizes probabilistic machine learning for early-stage screening. 
           It does <strong>not</strong> constitute medical advice or a definitive diagnosis. 
