@@ -66,6 +66,13 @@ const VISUAL_MAP = {
     caption: 'Risk messaging constrained by deterministic safety logic',
     chips: ['BMI gatekeeper', 'Acute warning', 'DiRECT simulator']
   },
+  'slide-10-differentiator': {
+    icon: '⚖️',
+    theme: 'teal',
+    title: 'Science over simulation',
+    caption: 'Comparative architecture evidence for why this system is distinct',
+    chips: ['Ensemble logic', 'SHAP XAI', 'Zero egress', 'Safety protocol']
+  },
   'slide-10-limitations': {
     icon: '🔍',
     theme: 'slate',
@@ -237,8 +244,9 @@ export default function PitchDeck({ onExit }) {
                     <tbody>
                       {active.table.rows.map(row => (
                         <tr key={`${active.id}-${row[0]}`}>
-                          <td>{row[0]}</td>
-                          <td>{row[1]}</td>
+                          {row.map((cell, cellIndex) => (
+                            <td key={`${active.id}-${row[0]}-${cellIndex}`}>{cell}</td>
+                          ))}
                         </tr>
                       ))}
                     </tbody>

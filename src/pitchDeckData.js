@@ -156,9 +156,36 @@ export const PITCH_DECK_SLIDES = [
     ]
   },
   {
+    id: 'slide-10-differentiator',
+    chapter: 'Impact',
+    badge: 'The edge of innovation',
+    title: 'The differentiator: science vs. simulation',
+    subtitle:
+      'Unlike generic risk calculators, this system combines high-dimensional machine learning with deterministic clinical safety logic.',
+    highlights: [
+      'Non-linear intelligence vs static rules: ensemble learning captures interaction patterns that simple additive logic cannot detect.',
+      'Mathematically grounded transparency: SHAP deconstructs each prediction into feature-level contributions rather than opaque scoring.',
+      'Clinical evidence vs opinion: remission simulation is mapped to DiRECT trial outcomes using piecewise remission probability functions.',
+      'Privacy sovereignty: native JavaScript inference executes on-device with zero data egress.',
+      'Safety gatekeeper protocol: BMI-aware logic suppresses unsafe advice and can trigger acute Type 1 or DKA warning pathways.'
+    ],
+    table: {
+      headers: ['Feature', 'Random web simulator', 'Our system'],
+      rows: [
+        ['Logic type', 'Linear or additive point-based scoring', 'Non-linear ensemble path-based inference'],
+        ['Data handling', 'Cloud-based server-side processing', 'Zero data egress on-device execution'],
+        ['Explanation', 'None, trust-only output', 'SHAP vector-level interpretability'],
+        ['Remission source', 'General lifestyle advice', 'DiRECT trial benchmark mapping'],
+        ['Safety guardrail', 'None', 'BMI-based deterministic gatekeeping']
+      ]
+    },
+    callout:
+      'Bottom line: this is not a calculator-style script; it is a SaMD-oriented prototype that combines privacy sovereignty with clinical-grade interpretability.'
+  },
+  {
     id: 'slide-10-limitations',
     chapter: 'Critical discussion',
-    badge: 'Slide 10',
+    badge: 'Slide 11',
     title: 'Critical discussion and limitations',
     highlights: [
       'Subjectivity: model depends on self-reported symptoms rather than objective laboratory biomarkers.',
@@ -170,7 +197,7 @@ export const PITCH_DECK_SLIDES = [
   {
     id: 'slide-11-conclusion-roadmap',
     chapter: 'Future work',
-    badge: 'Slide 11',
+    badge: 'Slide 12',
     title: 'Conclusion and future roadmap',
     timeline: [
       'Achievement: demonstrated that accurate and explainable AI can be deployed at the edge without compromising privacy.',
