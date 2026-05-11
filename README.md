@@ -3,6 +3,8 @@
 ### **Real-Time, Client-Side XAI Diagnostic Tool**
 
 A premium, privacy-preserving React application that leverages high-performance machine learning to predict diabetes risk. Built with a **"Zero Data Egress"** philosophy, the entire inference process—from feature scaling to gradient boosting—occurs locally on the user's device.
+---
+### Test the live app [Live App](diabetesriskpredictorapp.netlify.app)
 
 ---
 
